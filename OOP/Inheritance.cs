@@ -1,61 +1,99 @@
-public class Vehicle
+using System;
+
+namespace VehicleInheritanceDemo
 {
-    protected string Make;
-    protected string Model;
-    protected int Year;
-
-    public Vehicle(string make, string model, int year)
+    public class Vehicle
     {
-        Make = make;
-        Model = model;
-        Year = year;
+        protected string Make;
+        protected string Model;
+        protected int Year;
+
+        public Vehicle(string make, string model, int year)
+        {
+            Make = make;
+            Model = model;
+            Year = year;
+        }
+
+        public void StartEngine()
+        {
+            Console.WriteLine("Engine started");
+        }
+
+        public void StopEngine()
+        {
+            Console.WriteLine("Engine stopped");
+        }
+
+        public void DisplayInfo()
+        {
+            Console.WriteLine($"{Year} {Make} {Model}");
+        }
     }
 
-    public void StartEngine()
+    public class ElectricCar : Vehicle
     {
-        Console.WriteLine("Engine started");
+        private int _batteryCapacity;
+
+        public ElectricCar(string make, string model, int year, int batteryCapacity)
+            : base(make, model, year)
+        {
+            _batteryCapacity = batteryCapacity;
+        }
+
+        public void ChargeBattery()
+        {
+            Console.WriteLine($"Charging {_batteryCapacity} kWh battery");
+        }
     }
 
-    public void StopEngine()
+    public class GasCar : Vehicle
     {
-        Console.WriteLine("Engine stopped");
+        private double _fuelTankSize;
+
+        public GasCar(string make, string model, int year, double fuelTankSize)
+            : base(make, model, year)
+        {
+            _fuelTankSize = fuelTankSize;
+        }
+
+        public void FillTank()
+        {
+            Console.WriteLine($"Filling {_fuelTankSize} L fuel tank");
+        }
     }
 
-    public void DisplayInfo()
+    class Program
     {
-        Console.WriteLine($"{Year} {Make} {Model}");
-    }
-}
+        static void Main(string[] args)
+        {
+            // Create an Electric Car object
+            ElectricCar tesla = new ElectricCar(
+                make: "Tesla",
+                model: "Model 3",
+                year: 2025,
+                batteryCapacity: 75);
 
+            Console.WriteLine("=== Electric Car ===");
+            tesla.DisplayInfo();
+            tesla.StartEngine();
+            tesla.ChargeBattery();
+            tesla.StopEngine();
 
-public class ElectricCar : Vehicle
-{
-    private int _batteryCapacity;
+            Console.WriteLine();
 
-    public ElectricCar(string make, string model, int year, int batteryCapacity)
-        : base(make, model, year)
-    {
-        _batteryCapacity = batteryCapacity;
-    }
+            // Create a Gas Car object
+            GasCar toyota = new GasCar(
+                make: "Toyota",
+                model: "Camry",
+                year: 2024,
+                fuelTankSize: 60);
 
-    public void ChargeBattery()
-    {
-        Console.WriteLine($"Charging {_batteryCapacity}kWh battery");
-    }
-}
-
-public class GasCar : Vehicle
-{
-    private double _fuelTankSize;
-
-    public GasCar(string make, string model, int year, double fuelTankSize)
-        : base(make, model, year)
-    {
-        _fuelTankSize = fuelTankSize;
-    }
-
-    public void FillTank()
-    {
-        Console.WriteLine($"Filling {_fuelTankSize}L fuel tank");
+            Console.WriteLine("=== Gas Car ===");
+            toyota.DisplayInfo();
+            toyota.StartEngine();
+            toyota.FillTank();
+            toyota.StopEngine();
+        }
     }
 }
